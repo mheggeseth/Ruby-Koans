@@ -31,6 +31,24 @@ require File.expand_path(File.dirname(__FILE__) + '/edgecase')
 
 def score(dice)
   # You need to write this method
+  triples = [ 0, 1000, 200, 300, 400, 500, 600 ]
+  singles = [ 0, 100, 0, 0, 0, 50, 0 ]
+  
+  score_ary = [ 0, 0, 0, 0, 0, 0, 0 ]
+  dice.each { |i|
+    score_ary[i] += 1
+  }
+  total_score = 0
+  (1..6).each { |i|
+    if score_ary[i] >= 3
+      total_score += triples[i]
+      score_ary[i] -= 3
+    end
+    if i == 1 || i == 5
+      total_score += singles[i] * score_ary[i]
+    end
+  }
+  total_score
 end
 
 class AboutScoringProject < EdgeCase::Koan
